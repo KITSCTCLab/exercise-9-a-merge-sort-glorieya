@@ -1,40 +1,52 @@
 from typing import List
 
-def merge(nums1: List[int], m: int, nums2: List[int], n: int) -> None:
-  #Function implementing merging of two sorted arrays
-  #Input: nums1 -> array
-  #       m -> number of elements of nums1
-  #       nums2 -> array
-  #       n -> number of elements of nums2
-  l1 = nums1[:]
-  l2 = nums2[:]
-  curr, i, j = 0, 0, 0
-  while i < m and j < n:
+def merge(arr: [int], l: int, mid: int, r: int) -> [int]:
+  #Function implementing merging of two sorted sub-arrays
+  #Input: arr -> array
+  #       l: -> start index
+  #       mid: -> middle index
+  #       r: -> right index
+  l1 = arr[l:mid]
+  l2 = arr[mid:r]
+  i, j = 0, 0
+  k =  l
+  while i < len(l1) and j < len(l2):
     if l1[i] < l2[j]:
-      nums1[curr] = l1[i]
+      arr[k] = l1[i]
       i += 1
     else:
-      nums1[curr] = l2[j]
+      arr[k] = l2[j]
       j += 1
-    curr += 1
-  while i < m:
-    nums1[curr] = l1[i]
-    curr += 1
+    k += 1
+  while i < len(l1):
+    arr[k] = l1[i]
     i += 1
-  while j < n:
-    nums1[curr] = l2[j]
-    curr += 1
+    k += 1
+  while j < len(l2):
+    arr[k] - l2[j]
     j += 1
+    k += 1
+
+def merge_sort_ftn(arr, l, r) -> None:
+  #Function implementing in-place merge sort of subarray arr[l:r]
+  if r - l >= 2:
+    mid = l + (r - l) // 2
+    merge_sort_ftn(arr, l, mid)
+    merge_sort_ftn(arr, mid, r)
+    merge(arr, l, mid, r)
+  
+def merge_sort(data) -> None:
+  #TFunction carrying out in-place sorting of given array
+  merge_sort_ftn(data, 0, len(data))
 
 
-# Do noT change the following code
-nums1 = []
-nums2 = []
-for item in input().split(', '):
-  nums1.append(int(item))
-for item in input().split(', '):
-  nums2.append(int(item))
-m = int(input())
-n = int(input())
-merge(nums1, m, nums2, n)
-print(nums1)
+# Do not change the following code
+input_data = input()
+data = []
+for item in input_data.split(', '):
+  if item.isnumeric():
+    data.append(int(item))
+  elif item.lstrip("-").isnumeric():
+    data.append(int(item))
+merge_sort(data)
+print(data)
